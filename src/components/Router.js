@@ -1,29 +1,21 @@
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { reset } from '../lib/auth';
 
 import App from './App';
 import Dashboard from './Dashboard';
 import Login from './Login';
-import { resetAuth } from './Login/actions';
-
-// will move out to auth service
-let appStore = null;
-let authorized = false;
-const requireAuth = function (nextState, replace) {
-  if (!authorized) {
-    replace({
-      pathname: '/login',
-      state: { nextPathname: nextState.location.pathname }
-    });
-    appStore.dispatch(resetAuth());
-  }
-};
 
 export default function createRoutes(store) {
-  appStore = store;
-  appStore.subscribe(() => {
-    authorized = !!store.getState().auth.token;
-  });
+  const requireAuth = function (nextState, replace) {
+    if (!store.getState().auth.token) {
+      store.dispatch(reset());
+      replace({
+        pathname: '/login',
+        state: { nextPathname: nextState.location.pathname }
+      });
+    }
+  };
 
   return (
     <Router history={browserHistory}>

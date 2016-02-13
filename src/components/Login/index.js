@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AutoForm from 'react-auto-form';
 import { Input, Button, Snackbar } from 'react-toolbox';
-import { authenticate } from './actions';
+import { login, reset } from '../../lib/auth';
 
 class Login extends React.Component {
   state = {
@@ -15,11 +15,12 @@ class Login extends React.Component {
 
   onSnackbarTimeout () {
     this.setState({ snackbar: false });
+    this.props.dispatch(reset());
   }
 
   onSubmit = (e, values) => {
     e.preventDefault();
-    this.props.dispatch(authenticate(values));
+    this.props.dispatch(login(values));
   };
 
   render() {
