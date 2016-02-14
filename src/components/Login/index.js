@@ -4,13 +4,32 @@ import AutoForm from 'react-auto-form';
 import { Input, Button, Snackbar } from 'react-toolbox';
 import { login, reset } from '../../lib/auth';
 
+const handleRedirect = function (props) {
+  if (props.token) {
+    const { location } = this.props;
+    const path = (location.state) ? (location.state.nextPathname || '/') : '/';
+    this.context.router.replace(path);
+  }
+};
+
 class Login extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   state = {
     snackbar: false
   };
 
+  componentWillMount () {
+    handleRedirect.call(this, this.props)
+  }
+
   componentWillReceiveProps (nextProps) {
-    this.setState({ snackbar: !!nextProps.error });
+    handleRedirect.call(this, nextProps);
+    if (!nextProps.token) {
+      this.setState({ snackbar: !!nextProps.error });
+    }
   };
 
   onSnackbarTimeout () {
@@ -31,7 +50,7 @@ class Login extends React.Component {
       <div>
         {test}
         <AutoForm className='login' onSubmit={this.onSubmit}>
-          <Input name='email' type='text' label='Email'/>
+          <Input name='username' type='text' label='Email'/>
           <Input name='password' type='text' label='Password'/>
           <Button type='submit' label='Submit' raised primary/>
         </AutoForm>

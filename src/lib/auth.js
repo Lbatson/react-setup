@@ -1,6 +1,7 @@
-import promise from 'es6-promise'
-import fetch from 'isomorphic-fetch';
-promise.polyfill();
+import axios from 'axios';
+const http = axios.create({
+  baseURL: 'http://192.168.99.100:3000'
+});
 
 // action types
 export const AUTH = 'AUTH';
@@ -15,10 +16,10 @@ function request() {
   };
 }
 
-function success(token) {
+function success(data) {
   return {
     type: AUTH_SUCCESS,
-    token
+    token: data.id_token
   };
 }
 
@@ -36,16 +37,11 @@ export function reset() {
 }
 
 export function login(params) {
-  const options = {
-    method: 'post',
-    body: JSON.stringify(params)
-  };
-
   return dispatch => {
     dispatch(request());
-    return fetch('http://localhost:4000/api/v1/login', options)
-      .then(res => res.json())
-      .then(json => dispatch(success(json)))
+    return http
+      .post('/sessions/create', params)
+      .then(res => dispatch(success(res.data)))
       .catch(err => {
         console.log(err);
         dispatch(failure(err));
