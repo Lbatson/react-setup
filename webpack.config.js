@@ -14,21 +14,7 @@ module.exports = {
       {
         test: /(\.js|\.jsx)$/,
         exclude: /node_modules/,
-        loader: 'babel',
-        query: {
-          presets: ['es2015','react','stage-0'],
-          env: {
-            development: {
-              plugins: [['react-transform', {
-                transforms: [{
-                  transform: 'react-transform-hmr',
-                  imports: ['react'],
-                  locals: ['module']
-                }]
-              }]]
-            }
-          }
-        }
+        loader: 'babel'
       },
       {
         test: /(\.scss|\.css)$/,
