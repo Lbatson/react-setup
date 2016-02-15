@@ -42,10 +42,7 @@ export function login(params) {
     return http
       .post('/sessions/create', params)
       .then(res => dispatch(success(res.data)))
-      .catch(err => {
-        console.log(err);
-        dispatch(failure(err));
-      });
+      .catch(err => dispatch(failure(err.data.message)));
   }
 }
 

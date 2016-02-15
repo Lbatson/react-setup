@@ -34,7 +34,7 @@ class Login extends React.Component {
     handleRedirect.call(this, nextProps);
     if (nextProps.error) {
       this.setState({
-        message: nextProps.error.data.message,
+        message: nextProps.error,
         open: !!nextProps.error
       });
     }
