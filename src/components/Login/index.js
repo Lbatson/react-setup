@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AutoForm from 'react-auto-form';
-import { Input, Button, Snackbar } from 'react-toolbox';
+import { TextField, RaisedButton, Snackbar }  from 'material-ui/lib';
 import { login, reset } from '../../lib/auth';
 
 const handleRedirect = function (props) {
@@ -17,9 +17,14 @@ class Login extends React.Component {
     router: React.PropTypes.object.isRequired
   };
 
-  state = {
-    snackbar: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      autoHideDuration: 2000,
+      message: 'Error',
+      open: false
+    };
+  }
 
   componentWillMount () {
     handleRedirect.call(this, this.props)
@@ -27,15 +32,18 @@ class Login extends React.Component {
 
   componentWillReceiveProps (nextProps) {
     handleRedirect.call(this, nextProps);
-    if (!nextProps.token) {
-      this.setState({ snackbar: !!nextProps.error });
+    if (nextProps.error) {
+      this.setState({
+        message: nextProps.error.data.message,
+        open: !!nextProps.error
+      });
     }
   };
 
-  onSnackbarTimeout () {
-    this.setState({ snackbar: false });
+  onRequestClose = () => {
+    this.setState({ open: false });
     this.props.dispatch(reset());
-  }
+  };
 
   onSubmit = (e, values) => {
     e.preventDefault();
@@ -44,22 +52,22 @@ class Login extends React.Component {
 
   render() {
     // conditional element to render
-    const test = this.state.snackbar ? <div>Test</div> : null;
+    const test = this.props.error ? <div>Test</div> : null;
 
     return (
       <div>
         {test}
         <AutoForm className='login' onSubmit={this.onSubmit}>
-          <Input name='username' type='text' label='Email'/>
-          <Input name='password' type='text' label='Password'/>
-          <Button type='submit' label='Submit' raised primary/>
+          <TextField type='text' name='username' hintText='Email'/><br/>
+          <TextField type='password' name='password' hintText='Password'/><br/><br/>
+          <RaisedButton type='submit' label='Submit' secondary={true}/>
+          <Snackbar
+            open={this.state.open}
+            message={this.state.message}
+            autoHideDuration={this.state.autoHideDuration}
+            onRequestClose={this.onRequestClose}
+          />
         </AutoForm>
-        <Snackbar
-          active={this.state.snackbar}
-          label='Error'
-          onTimeout={this.onSnackbarTimeout.bind(this)}
-          timeout={2000}
-          type='cancel'/>
       </div>
     );
   }

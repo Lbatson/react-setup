@@ -10,8 +10,10 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav {...this.state}/>
-        <div className="container" {...this.state}>{this.props.children}</div>
+        <Nav/>
+        <div {...this.state}>
+          {this.props.children}
+        </div>
       </div>
     );
   }
