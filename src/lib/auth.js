@@ -46,6 +46,10 @@ export function login(params) {
   }
 }
 
+export function logout() {
+  return reset();
+}
+
 export function reducer(state = {}, action) {
   // modify state based on action types
   switch (action.type) {
@@ -65,10 +69,10 @@ export function reducer(state = {}, action) {
         error: action.error
       });
     case AUTH_RESET:
-      return Object.assign({}, state, {
+      return {
         loading: false,
         error: false
-      });
+      };
     default:
       return state;
   }
