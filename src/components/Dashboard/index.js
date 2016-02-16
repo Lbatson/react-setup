@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { logout } from '../../lib/auth';
+import { logout } from '../../lib/Auth/actions';
 import { RaisedButton }  from 'material-ui/lib';
 
 class Dashboard extends React.Component {

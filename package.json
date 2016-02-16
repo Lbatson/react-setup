@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node_modules/.bin/webpack-dev-server --progress --port 8000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha --compilers js:babel-core/register --recursive src/**/*.spec.js"
   },
   "author": "",
   "license": "ISC",
@@ -18,13 +18,19 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "css-loader": "^0.23.1",
+    "eslint": "^2.1.0",
+    "eslint-loader": "^1.2.1",
+    "eslint-plugin-react": "^3.16.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.8.1",
+    "mocha": "^2.4.5",
+    "nock": "^7.2.1",
     "node-bourbon": "^4.2.3",
     "node-neat": "^1.7.2",
     "node-sass": "^3.4.2",
     "postcss-loader": "^0.8.0",
     "react-transform-hmr": "^1.0.2",
+    "redux-mock-store": "0.0.6",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
     "toolbox-loader": "0.0.3",

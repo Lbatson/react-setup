@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import { reset } from '../lib/auth';
+import { reset } from '../lib/Auth/actions';
 
 import App from './App';
 import Dashboard from './Dashboard';

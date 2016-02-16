@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AutoForm from 'react-auto-form';
 import { TextField, RaisedButton, Snackbar }  from 'material-ui/lib';
-import { login, reset } from '../../lib/auth';
+import { login, reset } from '../../lib/Auth/actions';
 
 const handleRedirect = function (props) {
   if (props.token) {
