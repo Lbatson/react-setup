@@ -18,16 +18,10 @@ module.exports = {
       },
       {
         test: /(\.scss|\.css)$/,
-        loaders: [
-          'style',
-          'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-          'postcss',
-          'sass?sourceMap'
-        ]
+        loaders: ['style', 'css', 'sass']
       }
     ]
   },
-  postcss: [autoprefixer],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()

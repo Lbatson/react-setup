@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Nav from './Nav';
+import AppBar from './AppBar';
 
 export default class App extends React.Component {
   state = {
@@ -10,8 +10,8 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav/>
-        <div {...this.state}>
+        <AppBar/>
+        <div {...this.state} className="container">
           {this.props.children}
         </div>
       </div>

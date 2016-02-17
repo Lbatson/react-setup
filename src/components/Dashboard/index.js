@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../../lib/Auth/actions';
-import { RaisedButton }  from 'material-ui/lib';
+import { Card, CardHeader, CardText, RaisedButton }  from 'material-ui/lib';
 
 class Dashboard extends React.Component {
   static contextTypes = {
@@ -15,10 +15,12 @@ class Dashboard extends React.Component {
 
   render() {
     return(
-      <div>
-        <h1>Hello World</h1>
-        <RaisedButton label='Logout' onClick={this.onClick}/>
-      </div>
+      <Card className="card">
+        <CardHeader title="Hello" subtitle="World"/>
+        <CardText>
+          <RaisedButton label='Logout' onClick={this.onClick}/>
+        </CardText>
+      </Card>
     );
   }
 }

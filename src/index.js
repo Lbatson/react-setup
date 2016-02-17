@@ -3,6 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
+import { CustomRawTheme } from 'material-ui/lib/styles';
 import createRoutes from './components/Router';
 import configureStore from './lib/store';
 
@@ -15,8 +18,10 @@ injectTapEventPlugin();
 const store = configureStore();
 
 ReactDOM.render(
-  <Provider store={store}>
-    {createRoutes(store)}
-  </Provider>,
+  <MuiThemeProvider muiTheme={getMuiTheme(CustomRawTheme)}>
+    <Provider store={store}>
+      {createRoutes(store)}
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('app')
 );
