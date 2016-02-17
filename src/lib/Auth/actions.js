@@ -1,7 +1,4 @@
-import axios from 'axios';
-const http = axios.create({
-  baseURL: 'http://192.168.99.100:3000'
-});
+import http from '../http';
 
 // action types
 export const AUTH = 'AUTH';
@@ -40,9 +37,9 @@ export function login(params) {
   return dispatch => {
     dispatch(request());
     return http
-      .post('/sessions/create', params)
-      .then(res => dispatch(success(res.data)))
-      .catch(err => dispatch(failure(err.data.message)));
+      .postRequest('/sessions/create', params)
+      .then(data => dispatch(success(data)))
+      .catch(err => dispatch(failure(err.message)));
   }
 }
 
