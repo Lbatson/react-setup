@@ -1,6 +1,13 @@
 import { AUTH, AUTH_SUCCESS, AUTH_FAILURE, AUTH_RESET } from './actions';
 
-export default function reducer(state = {}, action) {
+// define initial state of all possible properties
+export const initialState = {
+  error: false,
+  loading: false,
+  token: null
+};
+
+export default function reducer(state = initialState, action) {
   // modify state based on action types
   switch (action.type) {
     case AUTH:
@@ -19,10 +26,8 @@ export default function reducer(state = {}, action) {
         error: action.error
       });
     case AUTH_RESET:
+      return initialState;
     default:
-      return {
-        loading: false,
-        error: false
-      };
+      return state;
   }
 }

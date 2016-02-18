@@ -1,15 +1,13 @@
 import expect from 'expect';
 import * as actions from './actions';
 import reducer from './reducer';
+import { initialState } from './reducer';
 
 describe('auth reducer', () => {
   it('should return initial state', () => {
     expect(
       reducer(undefined, {})
-    ).toEqual({
-      loading: false,
-      error: false
-    });
+    ).toEqual(initialState);
   });
 
   it('should return reset state', () => {
@@ -17,10 +15,7 @@ describe('auth reducer', () => {
       reducer({}, {
         type: actions.AUTH_RESET
       })
-    ).toEqual({
-      loading: false,
-      error: false
-    });
+    ).toEqual(initialState);
   });
 
   it('should return loading state', () => {
