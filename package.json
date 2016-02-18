@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "node_modules/.bin/webpack-dev-server --progress --port 8000",
-    "test": "node_modules/.bin/mocha --compilers js:babel-core/register --recursive src/**/*.spec.js"
+    "start": "node_modules/.bin/webpack-dev-server --config webpack.config.dev.js --progress --port 8000",
+    "test": "npm run test-base",
+    "test-watch": "npm run test-base -- -w",
+    "test-base": "node_modules/.bin/mocha --compilers js:babel-core/register --recursive src/**/*.spec.js"
   },
   "author": "",
   "license": "ISC",
