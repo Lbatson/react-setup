@@ -43,8 +43,7 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('style.css', { allChunks: true }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
     extensions: ['','.jsx','.scss','.js','.json']
