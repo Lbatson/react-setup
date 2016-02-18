@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -10,6 +11,14 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
+    preLoaders: [
+      {
+        test: /(\.js|\.jsx)$/,
+        include: path.resolve(__dirname, 'src'),
+        exclude: /bundle\.js$/,
+        loader: 'eslint'
+      }
+    ],
     loaders: [
       {
         test: /(\.js|\.jsx)$/,
@@ -18,11 +27,22 @@ module.exports = {
       },
       {
         test: /(\.scss|\.css)$/,
-        loaders: ['style', 'css', 'sass']
+        loader: ExtractTextPlugin.extract('style', 'css!postcss!sass')
+      },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'file?name=images/[name].[ext]'
       }
     ]
   },
+  eslint: {
+    configFile: '.eslint.json'
+  },
+  postcss: function () {
+    return [autoprefixer];
+  },
   plugins: [
+    new ExtractTextPlugin('style.css', { allChunks: true }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],

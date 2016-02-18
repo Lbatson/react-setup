@@ -1,1 +1,4 @@
-$primary-color: #3949ab;
+@import "~sass-material-colors/sass/sass-material-colors";
+
+$background-color: material-color('grey', '100');
+$primary-color: material-color('indigo', '600');
