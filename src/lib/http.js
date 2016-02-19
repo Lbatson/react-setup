@@ -14,17 +14,17 @@ const options = {
 function checkStatus(res) {
   if (res.status >= 200 && res.status < 300) {
     return res.data;
-  } else {
-    const error = new Error(res.data.message);
-    error.message = res.data.message;
-    throw error;
   }
+
+  const error = new Error(res.data.message);
+  error.message = res.data.message;
+  throw error;
 }
 
 function parseJSON(res) {
   return res
     .json()
-    .then((json) => {
+    .then(json => {
       res.data = json;
       return res;
     });
@@ -36,7 +36,7 @@ function request(method, endpoint, data) {
 
   return fetch(`${baseURL}${endpoint}`, options)
     .then(parseJSON)
-    .then(checkStatus)
+    .then(checkStatus);
 }
 
 function getRequest(endpoint, queryParams) {

@@ -7,7 +7,7 @@ import Dashboard from './Dashboard';
 import Login from './Login';
 
 export default function createRoutes(store) {
-  const requireAuth = function (nextState, replace) {
+  const requireAuth = function(nextState, replace) {
     if (!store.getState().auth.token) {
       store.dispatch(reset());
       replace({

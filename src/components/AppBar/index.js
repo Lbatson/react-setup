@@ -4,7 +4,7 @@ import { AppBar } from 'material-ui/lib';
 
 export default class extends React.Component {
   render() {
-    let links =
+    const links =
       <ul>
         <li><IndexLink to="/" className="logo" activeClassName="active">Dashboard</IndexLink></li>
         <li><Link to="/login" activeClassName="active">Login</Link></li>

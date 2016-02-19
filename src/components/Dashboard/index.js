@@ -14,7 +14,7 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    return(
+    return (
       <Card className="card">
         <CardHeader title="Hello" subtitle="World"/>
         <CardText>

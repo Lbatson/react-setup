@@ -40,7 +40,7 @@ export function login(params) {
       .postRequest('/sessions/create', params)
       .then(data => dispatch(success(data)))
       .catch(err => dispatch(failure(err.message)));
-  }
+  };
 }
 
 export function logout() {

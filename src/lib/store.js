@@ -4,7 +4,7 @@ import createLogger from 'redux-logger';
 import rootReducer from './reducers';
 
 function reduxDevtools() {
-  return (typeof window === 'object' && typeof window.devToolsExtension !== 'undefined')
+  return typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
     ? window.devToolsExtension()
     : f => f;
 }
@@ -14,6 +14,6 @@ const createStoreWithMiddleware = applyMiddleware(
   createLogger()
 )(createStore);
 
-export default function configureStore (initialState) {
+export default function configureStore(initialState) {
   return createStoreWithMiddleware(rootReducer, initialState, reduxDevtools());
 }

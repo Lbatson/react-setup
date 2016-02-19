@@ -4,10 +4,10 @@ import AutoForm from 'react-auto-form';
 import { TextField, RaisedButton, Snackbar }  from 'material-ui/lib';
 import { login, reset } from '../../lib/Auth/actions';
 
-const handleRedirect = function (props) {
+const handleRedirect = function(props) {
   if (props.token) {
     const { location } = this.props;
-    const path = (location.state) ? (location.state.nextPathname || '/') : '/';
+    const path = location.state ? location.state.nextPathname || '/' : '/';
     this.context.router.replace(path);
   }
 };
@@ -26,11 +26,11 @@ class Login extends React.Component {
     };
   }
 
-  componentWillMount () {
-    handleRedirect.call(this, this.props)
+  componentWillMount() {
+    handleRedirect.call(this, this.props);
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     handleRedirect.call(this, nextProps);
     if (nextProps.error) {
       this.setState({
@@ -38,7 +38,7 @@ class Login extends React.Component {
         open: !!nextProps.error
       });
     }
-  };
+  }
 
   onRequestClose = () => {
     this.setState({ open: false });

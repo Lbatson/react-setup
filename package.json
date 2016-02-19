@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "node_modules/.bin/eslint src --fix",
     "start": "node_modules/.bin/webpack-dev-server --config webpack.config.dev.js --progress --port 8000",
     "test": "npm run test-base",
     "test-watch": "npm run test-base -- -w",
@@ -14,11 +15,13 @@
   "devDependencies": {
     "autoprefixer": "^6.3.3",
     "babel-core": "^6.5.2",
+    "babel-eslint": "^5.0.0",
     "babel-loader": "^6.2.3",
     "babel-plugin-react-transform": "^2.0.0",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
+    "code-linter": "git+ssh://git@bitbucket.org/caremanagment/code-linter.git",
     "css-loader": "^0.23.1",
     "enzyme": "^2.0.0",
     "eslint": "^2.1.0",
@@ -55,5 +58,8 @@
     "redux": "^3.3.1",
     "redux-logger": "^2.5.2",
     "redux-thunk": "^1.0.3"
+  },
+  "eslintConfig": {
+    "extends": "./node_modules/code-linter/.eslintrc-react.json"
   }
 }

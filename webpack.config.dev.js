@@ -11,14 +11,6 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    preLoaders: [
-      {
-        test: /(\.js|\.jsx)$/,
-        include: path.resolve(__dirname, 'src'),
-        exclude: /bundle\.js$/,
-        loader: 'eslint'
-      }
-    ],
     loaders: [
       {
         test: /(\.js|\.jsx)$/,
@@ -35,15 +27,13 @@ module.exports = {
       }
     ]
   },
-  eslint: {
-    configFile: '.eslint.json'
-  },
   postcss: function () {
     return [autoprefixer];
   },
   plugins: [
     new ExtractTextPlugin('style.css', { allChunks: true }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
   ],
   resolve: {
     extensions: ['','.jsx','.scss','.js','.json']
