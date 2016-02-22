@@ -33,7 +33,6 @@ module.exports = {
   },
   plugins: [
     new webpack.EnvironmentPlugin([
-      'NODE_ENV',
       'BASE_URL'
     ]),
     new HtmlWebpackPlugin({
