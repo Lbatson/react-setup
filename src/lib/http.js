@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 import querystring from 'querystring';
 promise.polyfill();
 
-const baseURL = 'http://192.168.99.100:3000';
+const baseURL = process.env.BASE_URL;
 const options = {
   headers: {
     'Accept': 'application/json',

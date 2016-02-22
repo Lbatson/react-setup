@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "node_modules/.bin/webpack --config webpack.config.prod.js --progress",
+    "dist": "npm run test && npm run lint && npm run build",
     "lint": "node_modules/.bin/eslint src --fix",
     "start": "node_modules/.bin/webpack-dev-server --config webpack.config.dev.js --progress --port 8000",
     "test": "npm run test-base",
@@ -29,6 +31,7 @@
     "eslint-plugin-react": "^3.16.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "html-webpack-plugin": "^2.9.0",
     "mocha": "^2.4.5",
     "nock": "^7.2.1",
     "node-bourbon": "^4.2.3",
@@ -46,6 +49,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "dotenv": "^2.0.0",
     "es6-promise": "^3.1.2",
     "isomorphic-fetch": "^2.2.1",
     "material-ui": "git+ssh://git@bitbucket.org/pointclearsolutions/material-ui-pointclear.git",

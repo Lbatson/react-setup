@@ -16,10 +16,15 @@ coverage
 
 # Build
 build
+dist
 
 # Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
+
+# Environment
+.env
+.env.*
 
 # Other
 .DS_Store
