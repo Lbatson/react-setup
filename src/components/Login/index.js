@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import AutoForm from 'react-auto-form';
-import TextField from 'material-ui/TextField';
+import Auth0Lock from 'auth0-lock';
 import RaisedButton from 'material-ui/RaisedButton';
 import { notify } from '../../lib/Notification/actions';
-import { login } from '../../lib/Auth/actions';
+import { success, failure } from '../../lib/Auth/actions';
+
+const auth0ClientId = process.env.AUTH0_CLIENT_ID;
+const auth0Domain = process.env.AUTH0_DOMAIN;
 
 const handleRedirect = function(props) {
   if (props.token) {
@@ -27,6 +29,10 @@ export class Login extends React.Component {
     handleRedirect.call(this, this.props);
   }
 
+  componentDidMount() {
+    this.lock = new Auth0Lock(auth0ClientId, auth0Domain);
+  }
+
   componentWillReceiveProps(nextProps) {
     handleRedirect.call(this, nextProps);
     if (nextProps.error) {
@@ -39,25 +45,28 @@ export class Login extends React.Component {
     this.props.dispatch(login(values));
   };
 
+  handleSignIn = () => {
+    this.lock.show((err, profile, token) => {
+      if (err) {
+        this.props.dispatch(failure(err));
+      } else {
+        this.props.dispatch(success({ profile, token }));
+      }
+    });
+  };
+
   render() {
     return (
-      <AutoForm className='login' onSubmit={this.handleSubmit}>
-        <TextField
-          hintText='Email'
-          name='username'
-          type='text'
-        /><br/>
-        <TextField
-          hintText='Password'
-          name='password'
-          type='password'
-        /><br/><br/>
-        <RaisedButton
-          secondary
-          label='Submit'
-          type='submit'
-        />
-      </AutoForm>
+      <div className="row center-xs">
+        <div className="col-xs-12 col-sm-6">
+          <h1>Welcome to Digicreds</h1>
+          <RaisedButton
+            primary
+            label='Sign in'
+            onTouchTap={this.handleSignIn}
+          />
+        </div>
+      </div>
     );
   }
 }

@@ -41,6 +41,7 @@
     "file-loader": "^0.8.5",
     "html-webpack-plugin": "^2.9.0",
     "isparta": "^4.0.0",
+    "json-loader": "^0.5.4",
     "mocha": "^2.4.5",
     "nock": "^8.0.0",
     "node-sass": "^3.4.2",
@@ -52,11 +53,13 @@
     "sass-material-colors": "0.0.5",
     "sinon": "^1.17.3",
     "style-loader": "^0.13.0",
+    "transform-loader": "^0.2.3",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.13",
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "auth0-lock": "^9.2.0",
     "es6-promise": "^3.2.1",
     "flexboxgrid": "^6.3.0",
     "isomorphic-fetch": "^2.2.1",

@@ -33,6 +33,10 @@ module.exports = {
         }
       },
       {
+        test: /\.json$/,
+        loader: 'json'
+      },
+      {
         test: /(\.scss|\.css)$/,
         loader: 'style!css!postcss!sass'
       },
@@ -47,14 +51,27 @@ module.exports = {
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file'
+      },
+      {
+        test: /node_modules[\\\/]auth0-lock[\\\/].*\.js$/,
+        loaders: [
+          'transform-loader/cacheable?brfs',
+          'transform-loader/cacheable?packageify'
+        ]
+      },
+      {
+        test: /node_modules[\\\/]auth0-lock[\\\/].*\.ejs$/,
+        loader: 'transform-loader/cacheable?ejsify'
       }
     ]
   },
   postcss: () => [autoprefixer],
   plugins: [
     new webpack.EnvironmentPlugin([
-      'NODE_ENV',
-      'BASE_URL'
+      'AUTH0_CLIENT_ID',
+      'AUTH0_DOMAIN',
+      'BASE_URL',
+      'NODE_ENV'
     ]),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'index.html'),

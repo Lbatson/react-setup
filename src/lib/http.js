@@ -6,6 +6,7 @@ promise.polyfill();
 const baseURL = process.env.BASE_URL || 'http://localhost';
 const options = {
   headers: {
+    'Authorization': `Bearer ${localStorage.getItem('token')}`,
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   }

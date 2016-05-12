@@ -40,8 +40,10 @@ module.exports = {
   postcss: () => [autoprefixer],
   plugins: [
     new webpack.EnvironmentPlugin([
-      'NODE_ENV',
-      'BASE_URL'
+      'AUTH0_CLIENT_ID',
+      'AUTH0_DOMAIN',
+      'BASE_URL',
+      'NODE_ENV'
     ]),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'index.html'),

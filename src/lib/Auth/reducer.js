@@ -17,6 +17,7 @@ function removeToken() {
 export const initialState = () => ({
   error: false,
   loading: false,
+  profile: {},
   token: getToken()
 });
 
@@ -32,6 +33,7 @@ export default function reducer(state = initialState(), action) {
       setToken(action.token);
       return Object.assign({}, state, {
         loading: false,
+        profile: action.profile,
         token: action.token
       });
     case AUTH_FAILURE:
