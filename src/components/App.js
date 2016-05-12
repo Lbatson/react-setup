@@ -22,7 +22,7 @@ export const App = props => {
         params={params}
         routes={routes}
       />
-      <div className="wrapper">
+      <div className="wrap container-fluid">
         {children}
       </div>
       <Notification

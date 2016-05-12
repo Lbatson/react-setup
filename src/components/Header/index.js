@@ -12,7 +12,7 @@ export const Header = props => {
   const header = (
     <div className="header">
       <AppBar/>
-      <div className="wrapper">
+      <div className="wrap container-fluid">
         <div className="row">
           <div className="col-xs-12">
             <Breadcrumbs

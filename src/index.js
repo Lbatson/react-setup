@@ -1,4 +1,5 @@
 import '../styles/main.scss';
+import 'flexboxgrid';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
