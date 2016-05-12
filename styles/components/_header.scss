@@ -1,0 +1,18 @@
+.header {
+  .breadcrumbs {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding-top: 1rem;
+    li {
+      display: inline-block;
+      a {
+        color: black;
+        display: inline-block;
+      }
+      span {
+        padding: 0 0.5rem;
+      }
+    }
+  }
+}

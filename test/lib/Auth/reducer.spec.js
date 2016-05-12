@@ -1,27 +1,25 @@
-import expect from 'expect';
-import * as actions from './actions';
-import reducer from './reducer';
-import { initialState } from './reducer';
+import { expect } from 'chai';
+import * as actions from '../../../src/lib/Auth/actions';
+import reducer from '../../../src/lib/Auth/reducer';
+import { initialState } from '../../../src/lib/Auth/reducer';
 
 describe('auth reducer', () => {
   it('should return initial state', () => {
     expect(
       reducer(undefined, {})
-    ).toEqual(initialState);
+    ).to.deep.equal(initialState());
   });
 
   it('should return reset state', () => {
     expect(
-      reducer({}, {
-        type: actions.AUTH_RESET
-      })
-    ).toEqual(initialState);
+      reducer({}, { type: actions.AUTH_RESET })
+    ).to.deep.equal(initialState());
   });
 
   it('should return loading state', () => {
     expect(
       reducer({}, { type: actions.AUTH })
-    ).toEqual({
+    ).to.deep.equal({
       loading: true,
       error: false
     });
@@ -33,7 +31,7 @@ describe('auth reducer', () => {
         type: actions.AUTH_SUCCESS,
         token: 'test'
       })
-    ).toEqual({
+    ).to.deep.equal({
       loading: false,
       token: 'test'
     });
@@ -45,7 +43,7 @@ describe('auth reducer', () => {
         type: actions.AUTH_FAILURE,
         error: 'test'
       })
-    ).toEqual({
+    ).to.deep.equal({
       loading: false,
       error: 'test'
     });

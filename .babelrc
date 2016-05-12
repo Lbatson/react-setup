@@ -1,14 +1,6 @@
 {
-  "presets": ["es2015","react","stage-0"],
-  "env": {
-    "development": {
-      "plugins": [["react-transform", {
-        "transforms": [{
-          "transform": "react-transform-hmr",
-          "imports": ["react"],
-          "locals": ["module"]
-        }]
-      }]]
-    }
-  }
+  "presets": ["es2015", "react", "stage-0"],
+  "plugins": [
+    ["react-intl", { "messagesDir": "./translations/messages/" }]
+  ]
 }

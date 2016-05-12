@@ -3,13 +3,21 @@ import fetch from 'isomorphic-fetch';
 import querystring from 'querystring';
 promise.polyfill();
 
-const baseURL = process.env.BASE_URL;
+const baseURL = process.env.BASE_URL || 'http://localhost';
 const options = {
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   }
 };
+
+// TODO: temp workaround for lack of timeout with fetch API
+const timeout = p => (
+  new Promise((resolve, reject) => {
+    setTimeout(() => reject(new Error('Network timeout')), 5000);
+    p.then(resolve, reject);
+  })
+);
 
 function checkStatus(res) {
   if (res.status >= 200 && res.status < 300) {
@@ -34,7 +42,8 @@ function request(method, endpoint, data) {
   options.method = method;
   options.body = JSON.stringify(data);
 
-  return fetch(`${baseURL}${endpoint}`, options)
+  // TODO: remove timeout when implemented in fetch API
+  return timeout(fetch(`${baseURL}${endpoint}`, options))
     .then(parseJSON)
     .then(checkStatus);
 }

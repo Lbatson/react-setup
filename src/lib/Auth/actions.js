@@ -16,7 +16,7 @@ function request() {
 function success(data) {
   return {
     type: AUTH_SUCCESS,
-    token: data.id_token
+    token: data.token
   };
 }
 
@@ -35,11 +35,16 @@ export function reset() {
 
 export function login(params) {
   return dispatch => {
-    dispatch(request());
-    return http
-      .postRequest('/sessions/create', params)
-      .then(data => dispatch(success(data)))
-      .catch(err => dispatch(failure(err.message)));
+    // TODO remove conditional after implementing login service. this is only for testing
+    if (params.username === 'username' && params.password === 'password') {
+      dispatch(success({ token: 'userToken' }));
+    } else {
+      dispatch(request());
+      return http
+        .postRequest('/sessions/create', params)
+        .then(data => dispatch(success(data)))
+        .catch(err => dispatch(failure(err.message)));
+    }
   };
 }
 

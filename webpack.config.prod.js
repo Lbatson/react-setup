@@ -1,4 +1,4 @@
-require('dotenv').config({ path: '.env.prod' });
+require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
@@ -6,11 +6,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: 'eval-source-map',
   entry: path.resolve(__dirname, 'src/index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    publicPath: '/',
+    filename: '[name].[chunkhash].js'
   },
   module: {
     loaders: [
@@ -26,14 +26,21 @@ module.exports = {
       {
         test: /\.(png|jpg)$/,
         loader: 'file?name=images/[name].[ext]'
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url?limit=10000&minetype=application/font-woff'
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file'
       }
     ]
   },
-  postcss: function() {
-    return [autoprefixer];
-  },
+  postcss: () => [autoprefixer],
   plugins: [
     new webpack.EnvironmentPlugin([
+      'NODE_ENV',
       'BASE_URL'
     ]),
     new HtmlWebpackPlugin({
@@ -41,10 +48,19 @@ module.exports = {
       title: process.env.PROJECT_NAME
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new ExtractTextPlugin('style.css', { allChunks: true })
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      output: {
+        comments: false
+      }
+    }),
+    new ExtractTextPlugin('[name].[chunkhash].css', { allChunks: true })
   ],
   resolve: {
     extensions: ['', '.jsx', '.scss', '.js', '.json']
   }
 };
+

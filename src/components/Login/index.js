@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AutoForm from 'react-auto-form';
-import { TextField, RaisedButton, Snackbar }  from 'material-ui/lib';
-import { login, reset } from '../../lib/Auth/actions';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import { notify } from '../../lib/Notification/actions';
+import { login } from '../../lib/Auth/actions';
 
 const handleRedirect = function(props) {
   if (props.token) {
@@ -12,19 +14,14 @@ const handleRedirect = function(props) {
   }
 };
 
-class Login extends React.Component {
+export class Login extends React.Component {
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
+  };
+
   static contextTypes = {
     router: React.PropTypes.object.isRequired
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      autoHideDuration: 2000,
-      message: 'Error',
-      open: false
-    };
-  }
 
   componentWillMount() {
     handleRedirect.call(this, this.props);
@@ -33,42 +30,34 @@ class Login extends React.Component {
   componentWillReceiveProps(nextProps) {
     handleRedirect.call(this, nextProps);
     if (nextProps.error) {
-      this.setState({
-        message: nextProps.error,
-        open: !!nextProps.error
-      });
+      this.props.dispatch(notify(nextProps.error, true));
     }
   }
 
-  onRequestClose = () => {
-    this.setState({ open: false });
-    this.props.dispatch(reset());
-  };
-
-  onSubmit = (e, values) => {
+  handleSubmit = (e, values) => {
     e.preventDefault();
     this.props.dispatch(login(values));
   };
 
   render() {
-    // conditional element to render
-    const test = this.props.error ? <div>Test</div> : null;
-
     return (
-      <div>
-        {test}
-        <AutoForm className='login' onSubmit={this.onSubmit}>
-          <TextField type='text' name='username' hintText='Email'/><br/>
-          <TextField type='password' name='password' hintText='Password'/><br/><br/>
-          <RaisedButton type='submit' label='Submit' secondary={true}/>
-          <Snackbar
-            open={this.state.open}
-            message={this.state.message}
-            autoHideDuration={this.state.autoHideDuration}
-            onRequestClose={this.onRequestClose}
-          />
-        </AutoForm>
-      </div>
+      <AutoForm className='login' onSubmit={this.handleSubmit}>
+        <TextField
+          hintText='Email'
+          name='username'
+          type='text'
+        /><br/>
+        <TextField
+          hintText='Password'
+          name='password'
+          type='password'
+        /><br/><br/>
+        <RaisedButton
+          secondary
+          label='Submit'
+          type='submit'
+        />
+      </AutoForm>
     );
   }
 }

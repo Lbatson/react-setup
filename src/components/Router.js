@@ -4,6 +4,7 @@ import { reset } from '../lib/Auth/actions';
 
 import App from './App';
 import Dashboard from './Dashboard';
+import NotFound from './NotFound';
 import Login from './Login';
 
 export default function createRoutes(store) {
@@ -17,12 +18,15 @@ export default function createRoutes(store) {
     }
   };
 
+  /* eslint-disable react/jsx-sort-props */
   return (
     <Router history={browserHistory}>
-      <Route path="/" component={App}>
+      <Route path="/" name="Dashboard" component={App}>
         <IndexRoute component={Dashboard} onEnter={requireAuth}/>
-        <Route path="login" component={Login}/>
+        <Route path="login" name="Login" component={Login}/>
       </Route>
+      <Route path="*" component={NotFound}/>
     </Router>
   );
+  /* eslint-disable react/jsx-sort-props */
 }

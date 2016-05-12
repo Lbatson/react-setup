@@ -1,14 +1,15 @@
-require('dotenv').config({ path: '.env.dev' });
+require('dotenv').config();
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   entry: path.resolve(__dirname, 'src/index.js'),
   output: {
     path: path.resolve(__dirname, 'build'),
+    publicPath: '/',
     filename: 'bundle.js'
   },
   module: {
@@ -16,7 +17,20 @@ module.exports = {
       {
         test: /(\.js|\.jsx)$/,
         exclude: /node_modules/,
-        loader: 'babel'
+        loader: 'babel',
+        query: {
+          env: {
+            development: {
+              plugins: [['react-transform', {
+                transforms: [{
+                  transform: 'react-transform-hmr',
+                  imports: ['react'],
+                  locals: ['module']
+                }]
+              }]]
+            }
+          }
+        }
       },
       {
         test: /(\.scss|\.css)$/,
@@ -25,14 +39,21 @@ module.exports = {
       {
         test: /\.(png|jpg)$/,
         loader: 'file?name=images/[name].[ext]'
+      },
+      {
+        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url?limit=10000&minetype=application/font-woff'
+      },
+      {
+        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'file'
       }
     ]
   },
-  postcss: function() {
-    return [autoprefixer];
-  },
+  postcss: () => [autoprefixer],
   plugins: [
     new webpack.EnvironmentPlugin([
+      'NODE_ENV',
       'BASE_URL'
     ]),
     new HtmlWebpackPlugin({
@@ -52,3 +73,4 @@ module.exports = {
     hot: true
   }
 };
+

@@ -1,22 +1,58 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import AppBar from './AppBar';
+import Header from './Header';
+import Notification from '../lib/Notification';
+import * as NotificationActions from '../lib/Notification/actions';
 
-export default class App extends React.Component {
-  state = {
-    authenticated: !!this.props.token
-  };
+export const App = props => {
+  const {
+    auth,
+    children,
+    params,
+    notification,
+    routes,
+    onNotificationReset
+  } = props;
 
-  render() {
-    return (
-      <div>
-        <AppBar/>
-        <div {...this.state} className="container">
-          {this.props.children}
-        </div>
+  return (
+    <div>
+      <Header
+        authenticated={!!auth.token}
+        params={params}
+        routes={routes}
+      />
+      <div className="wrapper">
+        {children}
       </div>
-    );
-  }
-}
+      <Notification
+        action="X"
+        autoHideDuration={notification.autoHideDuration}
+        isError={notification.error}
+        message={notification.message}
+        open={notification.open}
+        onReset={onNotificationReset}
+      />
+    </div>
+  );
+};
 
-export default connect(state => state.auth)(App);
+App.propTypes = {
+  auth: PropTypes.object,
+  children: PropTypes.any,
+  notification: PropTypes.object,
+  params: PropTypes.object,
+  routes: PropTypes.array,
+  onNotificationReset: PropTypes.func
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  notification: state.notification
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  onNotificationReset: NotificationActions.reset
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
